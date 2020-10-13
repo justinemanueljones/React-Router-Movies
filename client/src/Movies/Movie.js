@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom'; //added useParams hook
 
 const Movie = (props) => {
   const [movie, setMovie] = useState();
  
+  const param = useParams();
+
   useEffect(() => {
-    const id = 1;
-    // change ^^^ that line and grab the id from the URL
-    // You will NEED to add a dependency array to this effect hook
+    const id = param.id;//
+    // (1)change ^^^ that line and grab the id from the URL
+    
 
        axios
-        .get(`http://localhost:5000/api/movies/${id}`)
+        .get(`http://localhost:5000/api/movies/${id}`)  // (2)Study this endpoint with Postman
         .then(response => {
+          // (3)Study this response with a breakpoint or log statements
+        // and set the response data as the 'movie' slice of state
           setMovie(response.data);
         })
         .catch(error => {
           console.error(error);
         });
 
-  },[]);
+  },[movie]);
   
   // Uncomment this only when you have moved on to the stretch goals
   // const saveMovie = evt => {
